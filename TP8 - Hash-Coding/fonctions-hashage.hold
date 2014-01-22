@@ -1,0 +1,189 @@
+//
+//  main.c
+//  TP8 - Hash-Coding
+//
+//  Created by Med Ayoub on 18/01/2014.
+//  Copyright (c) 2014 Med Ayoub. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//Declaration des variables globales
+#define MAX 100
+
+//Declration des structures
+typedef struct liste{
+    int donnee;//la donnee
+    int etat;//variabla vallant -1 ou 1, suivant la disponibilite
+    struct liste *suiv;//pointeur vers la cellule suivante
+}liste;
+
+typedef struct tableau{
+    liste *cellule[MAX];//un tableau dont les cases sont des cellules
+    int dernier_elem;//variable marquant le rang du dernier element
+}tableau;
+
+//Declaration des fonctions
+
+/* Nom de la fonction : creer_tableau
+ * Entrees :
+ *      int taille : la taille du tableau a creer
+ * Sorties :
+ *      tableau *tableau : un tableau de taille taille
+ * Description :
+ *      cette fonction recoit comme argument un entier taille et procede 
+ * ainsi a la creation d'un tableau de taille taille, ceci en allouant 
+ * de la place memoire a 'taille' case du tableau, et initialise les etats
+ * a -1, pour permettre aux donnees d'etre inserees.
+ */
+tableau *creer_tableau(int taille)
+{
+    int i;
+    tableau *tableau = malloc(sizeof(tableau));
+    if(!tableau) return NULL;
+    for(i=-taille; i < taille; i++)
+    {
+        tableau->cellule[i] = malloc(sizeof(liste));
+        tableau->cellule[i]->etat = -1;
+        tableau->cellule[i]->suiv = NULL;
+        
+    }
+    tableau->dernier_elem = taille-1;
+    return tableau;
+}
+
+/* Nom de la fonction : ajout_valeur_tableau
+ * Entrees :
+ *      tableau **tableau : le tableau ou sera faite l'insertion
+ *      int valeur : la valeur a ajouter dans le tableau
+ *      int taille : la position d'insertion dans le tableau
+ * Sorties :
+ *      NULL
+ * Description :
+ *      cette fonction recoit comme argument un tableau de hashage, et une
+ * valeur a inserer a une position precise. S'il y a collision on procede
+ * a un debordement, en creant une nouvelle cellule de type liste, et y
+ * inserer la valeur.
+ */
+void ajout_valeur_tableau(tableau **tableau, int valeur, int position)
+{
+    if(position > (*tableau)->dernier_elem) printf("position innexistante");
+    if((*tableau)->cellule[position]->etat == -1)//case vide
+    {
+        (*tableau)->cellule[position]->donnee = valeur;
+        (*tableau)->cellule[position]->etat = 1;
+        (*tableau)->cellule[position]->suiv = NULL;
+    }
+    else if((*tableau)->cellule[position]->etat == 1)//case remplise
+    {
+        liste *tmp = malloc(sizeof(liste));
+        tmp = (*tableau)->cellule[position];
+        while(tmp->suiv) tmp = tmp->suiv;
+        tmp->suiv = malloc(sizeof(liste));
+        tmp->suiv->donnee = valeur;
+        tmp->suiv->etat = 1;
+        tmp->suiv->suiv = NULL;
+    }
+}
+
+/* Nom de la fonction : rechercher_valeur
+ * Entrees :
+ *      tableau *tableau : le tableau ou sera faite la recherche
+ *      int valeur : la valeur a rechercher dans le tableau
+ * Sorties :
+ *      int : un entier qui represente la position de la valeur dans 
+ * l'une des listes du tableau, et -1 dans le cas ou la valeur n'existe
+ * pas
+ * Description :
+ *      cette fonction recoit comme argument un tableau de hashage, et une
+ * valeur a rechecher, ainsi elle calcule la position ou est supposee etre
+ * la valeur, puis parcours la liste a la recherche de la position, si la
+ * valeur est touve on retourne son rang dans la liste chainee, sinon on 
+ * retourne -1
+ */
+int rechercher_valeur(tableau *tableau, int valeur)
+{
+    
+    int rang = -1, booleenne = 0;
+    int position = valeur % (tableau->dernier_elem + 1);
+    liste *tmp = tableau->cellule[position];
+    while(tmp)
+    {
+        rang++;
+        if(tmp->donnee == valeur)
+        {
+            booleenne=1;
+            break;
+        }
+        else tmp = tmp->suiv;
+    }
+    if(booleenne) return rang;
+    return -1;
+}
+
+/* Nom de la fonction : remplissage_tableau
+ * Entrees :
+ *      tableau **tableau : le tableau a remplir
+ * Sorties :
+ *      NULL
+ * Description :
+ *      cette fonction recoit comme argument un tableau de type tableau
+ * et procede a son remplissage jusqu'au dernier element, en faisant
+ * appel a chaque lecture d'une valeur saisie au clavier, a la fonction
+ * ajout_valeur_tableau pour incerer l'element a la bonne position (meme
+ * en cas de collision), qui est calculee en utilisant une fonction de
+ * hashage compatible
+ */
+void remplissage_tableau(tableau **tableau)
+{
+    int i, reponse=1, valeur;
+    printf("\nRemplissage du tableau:\n");
+    do{
+        printf("Donner une valeur a ajouter dans le tableau :");
+        scanf("%d", &valeur);
+        //i++;
+        i = valeur % ((*tableau)->dernier_elem + 1);//fonction de hashage
+        
+        ajout_valeur_tableau(&(*tableau), valeur, i);
+        
+        
+        printf("Voulez-vous ajouter une autre valeur ?(0/1):");
+        scanf("%d", &reponse);
+        }while (reponse==1);
+}
+
+/* Nom de la fonction : affichage_tableau
+ * Entrees :
+ *      tableau **tableau : le tableau a remplir
+ * Sorties :
+ *      NULL
+ * Description :
+ *      cette fonction recoit comme argument un tableau de type tableau
+ * et procede a son remplissage jusqu'au dernier element, en faisant
+ * appel a chaque lecture d'une valeur saisie au clavier, a la fonction
+ * ajout_valeur_tableau pour incerer l'element a la bonne position (meme
+ * en cas de collision), qui est calculee en utilisant une fonction de
+ * hashage compatible
+ */
+void affichage_tableau(tableau *tableau)
+{
+    int i;
+    printf("\nAffichage du tableau:\n");
+    for(i = 0; i <= tableau->dernier_elem; i++)
+    {
+        if(tableau->cellule[i]->etat == 1)
+            printf("[%d]", tableau->cellule[i]->donnee);
+        else printf("[-]");
+        
+        liste *tmp = tableau->cellule[i]->suiv;
+        while(tmp)
+        {
+            if(tmp->etat == 1) printf("[%d]", tmp->donnee);
+            else printf("[-]");
+            tmp = tmp->suiv;
+        }
+        printf("\n");
+    }
+}
+

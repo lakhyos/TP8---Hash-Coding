@@ -1,0 +1,89 @@
+//
+//  main.c
+//  TP8 - Hash-Coding
+//
+//  Created by Med Ayoub on 18/01/2014.
+//  Copyright (c) 2014 Med Ayoub. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "fonctions-hashage.h"
+
+int main()
+{
+    int reponse, taille, valeur, position;
+    tableau *tableau;
+    do {
+       printf("\nFaites votre choix:"
+              "\n1-Creer un tableau de hashage"
+              "\n2-Remplir le tableau de hashage"
+              "\n3-Afficher le tableau de hashage"
+              "\n4-Ajouter une valeur au tableau de hashage"
+              "\n5-Trouver une valeur dans le tableaude hashage"
+              "\nAutres :");
+        scanf("%d",&reponse);
+        
+        switch (reponse)
+        {
+            case 1:
+            {
+                printf("\nDonner la taille du tableau a creer:");
+                scanf("%d",&taille);
+                tableau = creer_tableau(taille);
+                break;
+            }
+            case 2: remplissage_tableau(&tableau);
+                    break;
+            case 3: affichage_tableau(tableau);
+                    break;
+            case 4:
+            {
+                printf("\nDonner la valeur a ajouter dans le tableau:");
+                scanf("%d",&valeur);
+                position = valeur % (tableau->dernier_elem + 1);
+                ajout_valeur_tableau(&tableau, valeur, position);
+                break;
+            }
+            case 5:
+            {
+                printf("\nQuelle est la valeur recherchee ?:");
+                scanf("%d",&valeur);
+                if(rechercher_valeur(tableau, valeur) == -1) printf("\nOuppps!");
+                else
+                {
+                    printf("\nBingooo!\n"
+                           "la valeur se trouve au rang: %d\n"
+                           "de la case numero: %d",rechercher_valeur(tableau, valeur),
+                           (valeur % (tableau->dernier_elem + 1)));
+                }
+                printf("\n");
+                break;
+            }
+        }
+    }while ((reponse > 0) && (reponse < 6));
+    
+    /*int valeur;
+    tableau *tableau = creer_tableau(3);
+    remplissage_tableau(&tableau);
+    ajout_valeur_tableau(&tableau, 0, 0);
+    ajout_valeur_tableau(&tableau, 1, 1);
+    ajout_valeur_tableau(&tableau, 2, 2);
+    ajout_valeur_tableau(&tableau, 3, 0);
+    ajout_valeur_tableau(&tableau, 5, 2);
+    ajout_valeur_tableau(&tableau, 6, 0);
+    printf("\n");
+    affichage_tableau(tableau);
+    printf("\nQuelle est la valeur recherchee ?:");
+    scanf("%d",&valeur);
+    if(rechercher_valeur(tableau, valeur) == -1) printf("\nOuppps!");
+    else
+    {
+        printf("\nBingooo!\n"
+               "la valeur se trouve au rang: %d\n"
+               "de la case numero: %d",rechercher_valeur(tableau, valeur),
+               (valeur % (tableau->dernier_elem + 1)));
+    }
+    printf("\n");*/
+    return 0;
+}

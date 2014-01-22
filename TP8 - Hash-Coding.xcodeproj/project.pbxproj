@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B9273C14188ACD3F00FD9ED4 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B9273C13188ACD3F00FD9ED4 /* main.c */; };
+		B9273C14188ACD3F00FD9ED4 /* fonctions-hashage.hold in Sources */ = {isa = PBXBuildFile; fileRef = B9273C13188ACD3F00FD9ED4 /* fonctions-hashage.hold */; };
 		B9273C16188ACD3F00FD9ED4 /* TP8___Hash_Coding.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B9273C15188ACD3F00FD9ED4 /* TP8___Hash_Coding.1 */; };
+		B9273C1D188AF1A000FD9ED4 /* main.cold in Sources */ = {isa = PBXBuildFile; fileRef = B9273C1C188AF1A000FD9ED4 /* main.cold */; };
+		B9F0BB39188F15D5004E7E00 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B9F0BB38188F15D5004E7E00 /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,8 +28,10 @@
 
 /* Begin PBXFileReference section */
 		B9273C10188ACD3F00FD9ED4 /* TP8 - Hash-Coding */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "TP8 - Hash-Coding"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9273C13188ACD3F00FD9ED4 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		B9273C13188ACD3F00FD9ED4 /* fonctions-hashage.hold */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fonctions-hashage.hold"; sourceTree = "<group>"; };
 		B9273C15188ACD3F00FD9ED4 /* TP8___Hash_Coding.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "TP8___Hash_Coding.1"; sourceTree = "<group>"; };
+		B9273C1C188AF1A000FD9ED4 /* main.cold */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.cold; sourceTree = "<group>"; };
+		B9F0BB38188F15D5004E7E00 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +64,10 @@
 		B9273C12188ACD3F00FD9ED4 /* TP8 - Hash-Coding */ = {
 			isa = PBXGroup;
 			children = (
-				B9273C13188ACD3F00FD9ED4 /* main.c */,
+				B9273C13188ACD3F00FD9ED4 /* fonctions-hashage.hold */,
 				B9273C15188ACD3F00FD9ED4 /* TP8___Hash_Coding.1 */,
+				B9273C1C188AF1A000FD9ED4 /* main.cold */,
+				B9F0BB38188F15D5004E7E00 /* main.c */,
 			);
 			path = "TP8 - Hash-Coding";
 			sourceTree = "<group>";
@@ -117,7 +123,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9273C14188ACD3F00FD9ED4 /* main.c in Sources */,
+				B9273C1D188AF1A000FD9ED4 /* main.cold in Sources */,
+				B9273C14188ACD3F00FD9ED4 /* fonctions-hashage.hold in Sources */,
+				B9F0BB39188F15D5004E7E00 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +233,7 @@
 				B9273C1B188ACD3F00FD9ED4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
